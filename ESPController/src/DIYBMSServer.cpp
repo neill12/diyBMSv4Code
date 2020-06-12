@@ -612,7 +612,7 @@ void DIYBMSServer::monitor(AsyncWebServerRequest *request) {
   AsyncResponseStream *response =
       request->beginResponseStream("application/json");
 
-  DynamicJsonDocument doc(4096);
+  DynamicJsonDocument doc(10240);
 
   JsonObject root = doc.to<JsonObject>();
 
@@ -636,7 +636,7 @@ void DIYBMSServer::monitor(AsyncWebServerRequest *request) {
   for (uint8_t bank = 0; bank < mysettings.totalNumberOfBanks; bank++) {
     JsonArray data = bankArray.createNestedArray();
 
-    for (uint16_t i = 0; i < numberOfModules[bank]; i++) {
+    for (uint8_t i = 0; i < numberOfModules[bank]; i++) {
       JsonObject cell = data.createNestedObject();
       cell["v"] = cmi[bank][i].voltagemV;
       cell["minv"] = cmi[bank][i].voltagemVMin;
