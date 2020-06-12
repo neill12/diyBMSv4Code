@@ -57,6 +57,7 @@ The time.h file in this library conflicts with the time.h file in the ESP core p
 #include <Ticker.h>
 #include <pcf8574_esp.h>
 #include <Wire.h>
+#include <Adafruit_ADS1015.h>
 
 //Debug flags for ntpclientlib
 #define DBG_PORT Serial1
@@ -90,6 +91,7 @@ bool previousRelayPulse[RELAY_TOTAL];
 
 //PCF8574P has an i2c address of 0x38 instead of the normal 0x20
 PCF857x pcf8574(0x38, &Wire);
+Adafruit_ADS1115 ads(0x48);
 
 void ICACHE_RAM_ATTR PCFInterrupt() {
   if ((pcf8574.read8() & B00010000)==0) {
@@ -438,6 +440,8 @@ void timerProcessRules() {
   } else {
     Serial1.println("N/F");
   }
+
+bpackI = (ads.readADC_Differential_0_1() * 0.1875F)/1000.0;
 
 }
 
@@ -798,6 +802,7 @@ void setup() {
 
   //Make PINs 4-7 INPUTs - the interrupt fires when triggered
   pcf8574.begin();
+  ads.begin();
 
   //We test to see if the i2c expander is actually fitted
   pcf8574.read8();

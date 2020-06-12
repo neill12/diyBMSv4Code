@@ -39,6 +39,7 @@ distribute your   contributions under the same license as the original.
 #include "logo.h"
 #include "echarts_js.h"
 
+
 AsyncWebServer *DIYBMSServer::_myserver;
 String DIYBMSServer::UUIDString;
 
@@ -628,6 +629,7 @@ void DIYBMSServer::monitor(AsyncWebServerRequest *request) {
   monitor["badcrc"] = receiveProc.totalCRCErrors;
   monitor["ignored"] = receiveProc.totalNotProcessedErrors;
   monitor["roundtrip"] = receiveProc.packetTimerMillisecond;
+  monitor["current"] = bpackI;
 
   JsonArray bankArray = root.createNestedArray("bank");
 

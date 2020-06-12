@@ -457,7 +457,7 @@ function queryBMS() {
 
     var voltage = [0.0, 0.0, 0.0, 0.0];
     //Not currently supported
-    var current = [0.0, 0.0, 0.0, 0.0];
+    var current = [];
 
     var bankmin = [5000,5000,5000,5000];
     var bankmax = [0.0,0.0,0.0,0.0];
@@ -497,6 +497,7 @@ function queryBMS() {
     //Ignore and hide any errors which are zero
     if (jsondata.monitor.badcrc==0) { $("#badcrc").hide(); } else { $("#badcrc .v").html(jsondata.monitor.badcrc);$("#badcrc").show();}
     if (jsondata.monitor.ignored==0) { $("#ignored").hide(); } else { $("#ignored .v").html(jsondata.monitor.ignored);$("#ignored").show();}
+    if (jsondata.monitor.current==0) { $("#current").hide(); } else { $("#current .v").html(jsondata.monitor.current);$("#current").show();}
 
     if (jsondata.monitor.sent==0) { $("#sent").hide(); } else { $("#sent .v").html(jsondata.monitor.sent);$("#sent").show();}
     if (jsondata.monitor.received==0) { $("#received").hide(); } else { $("#received .v").html(jsondata.monitor.received);$("#received").show();}
@@ -516,10 +517,6 @@ function queryBMS() {
       }
 
     }
-
-    //Not currently supported
-    $("#current").hide();
-    $("#current .v").html(current[0].toFixed(2));
 
     if (jsondata.monitor.commserr==true) {
       $("#commserr").show();
